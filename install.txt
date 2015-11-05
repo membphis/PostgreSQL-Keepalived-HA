@@ -167,6 +167,11 @@ host sky_pg_cluster sky_pg_cluster 192.168.1.15/32 md5
 host sky_pg_cluster sky_pg_cluster 192.168.1.11/32 md5
 host sky_pg_cluster sky_pg_cluster 192.168.2.138/32 md5
 
+-- 修改配置 .pgpass 文件
+192.168.1.15:5432:sky_pg_cluster:sky_pg_cluster:qXzpigJCRmamDf6vv0uFpf4Qg
+127.0.0.1:5432:sky_pg_cluster:sky_pg_cluster:qXzpigJCRmamDf6vv0uFpf4Qg
+192.168.1.11:5432:sky_pg_cluster:sky_pg_cluster:qXzpigJCRmamDf6vv0uFpf4Qg
+
 备注：结合 keepalived 的 interval 配置，每 10 秒更新 cluster_status 表。
 
 六 安装  Keepalived 
