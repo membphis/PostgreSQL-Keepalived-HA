@@ -5,7 +5,7 @@ PostgreSQL 版本： 9.4.1
 主节点 IP： 192.168.1.15
 备节点 IP： 192.168.1.11
 Keepalived VIP：   192.168.1.26
-FENCE DEVICE： HP
+FENCE DEVICE： HPPPPPPPPPPP
 
 二 系统配置 ( 主备节点 )
 -- 创建用户
@@ -29,7 +29,7 @@ yum  -y install gcc readline readline-devel zlib zlib-devel python-devel ipmitoo
 wget -c https://ftp.postgresql.org/pub/source/v9.4.1/postgresql-9.4.1.tar.bz2
 
 --安装 PostgreSQL 软件
-tar jxvf postgresql-9.4.1.tar.bz2 
+tar jxvf postgresql-9.4.1.tar.bz2
 cd postgresql-9.4.1
 ./configure --prefix=/opt/pgsql_9.4.1 --with-wal-blocksize=16 --with-pgport=1921
 gmake world
@@ -37,7 +37,7 @@ gmake install-world
 ln -s /opt/pgsql_9.4.1 /opt/pgsql
 
 --配置环境变量
-vim /home/pg94/.bash_profile 
+vim /home/pg94/.bash_profile
 
 export PGPORT=1921
 export PGUSER=postgres
@@ -99,7 +99,7 @@ lc_time = 'C'                           # locale for time formatting
 四 流复制搭建
 --创建流复制用户( 主节点 )
 CREATE USER repuser
-  REPLICATION 
+  REPLICATION
   LOGIN
   CONNECTION LIMIT 5
   ENCRYPTED PASSWORD 'Hgo7haSIASGAJYSsFqbYfyx2q';
@@ -110,10 +110,10 @@ vim /home/pg94/.pgpass
 192.168.1.11:1921:replication:repuser:Hgo7haSIASGAJYSsFqbYfyx2q
 192.168.1.26:1921:replication:repuser:Hgo7haSIASGAJYSsFqbYfyx2q
 
-chmod 0600 /home/pg94/.pgpass 
+chmod 0600 /home/pg94/.pgpass
 
 --配置 pg_hba.conf ( 主节点)
-# replication 
+# replication
 host replication repuser 192.168.1.15/32 md5
 host replication repuser 192.168.1.11/32 md5
 host replication repuser 192.168.1.26/32 md5
@@ -135,7 +135,7 @@ standby_mode = on
 primary_conninfo = 'host=192.168.1.15 port=1921 user=repuser'
 
 --启备库
-pg_ctl start 
+pg_ctl start
 备注：启动备库并观察流复制是否搭建成功。
 
 五 sky_pg_cluster 数据库配置
@@ -174,7 +174,7 @@ host sky_pg_cluster sky_pg_cluster 192.168.2.138/32 md5
 
 备注：结合 keepalived 的 interval 配置，每 10 秒更新 cluster_status 表。
 
-六 安装  Keepalived 
+六 安装  Keepalived
 --下载
 wget http://www.keepalived.org/software/keepalived-1.2.15.tar.gz
 
@@ -183,7 +183,7 @@ yum -y install openssl  openssl-devel popt
 
 --解压安装
 cd keepalived-1.2.15
-tar xvf keepalived-1.2.15.tar.gz 
+tar xvf keepalived-1.2.15.tar.gz
 # ./configure --prefix=/usr/local/keepalived --sysconf=/etc
 # make
 # make install
@@ -196,7 +196,7 @@ keepalived configure: error: No SO_MARK declaration in headers
 [root@db1 ~]# /etc/init.d/keepalived start
 Starting keepalived: /bin/bash: keepalived: command not found
                                                            [FAILED]
-                                                           
+
 --解决方法
 ln -s /usr/local/keepalived/sbin/keepalived  /usr/sbin/
 
@@ -223,10 +223,10 @@ global_defs {
 }
 
  vrrp_script check_pg_alived {
-    script "/usr/local/bin/pg_moniter.sh" 
-    interval 10 
+    script "/usr/local/bin/pg_moniter.sh"
+    interval 10
     fall 5    # require 5 failures for KO
-} 
+}
 
 vrrp_instance VI_1 {
     state BACKUP
@@ -239,7 +239,7 @@ vrrp_instance VI_1 {
         auth_type PASS
         auth_pass t9rveMP0Z9S1
     }
-      track_script { 
+      track_script {
         check_pg_alived
      }
     virtual_ipaddress {
