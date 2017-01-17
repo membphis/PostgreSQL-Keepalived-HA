@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load Env
-export PGPORT=1921
+export PGPORT=2222222222
 export PGUSER=sky_pg_cluster
 export PGDBNAME=sky_pg_cluster
 export PGDATA=/opt/database/pg94/pg_root
@@ -26,7 +26,7 @@ echo $SQL1 | psql -At -h 127.0.0.1 -p $PGPORT -U $PGUSER -d $PGDBNAME >> $MONITO
 
 
 # 判断主库是否可用
-echo $SQL2 | psql -At -h 127.0.0.1 -p $PGPORT -U $PGUSER -d $PGDBNAME 
+echo $SQL2 | psql -At -h 127.0.0.1 -p $PGPORT -U $PGUSER -d $PGDBNAME
 if [ $? -eq 0 ]; then
    echo -e "`date +%F\ %T`:  Primary db is health."  >> $MONITOR_LOG
    exit 0
@@ -35,4 +35,4 @@ else
    exit 1
 fi
 
-  
+
