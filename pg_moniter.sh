@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Load Env
-export PGPORT=2222222222
+export PGPORT=222222222266666666666666666666666666
 export PGUSER=sky_pg_cluster
 export PGDBNAME=sky_pg_cluster
 export PGDATA=/opt/database/pg94/pg_root
